@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "93d16171-594e-481e-a366-d2d97ea8f7bc",
+		"name": "E2E LetMeShop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29224108"
+	},
+	"item": [
+		{
+			"name": "LogIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"message\", function () {\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Login Successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userEmail\": \"dattatrayfugare77@gmail.com\",\r\n \"userPassword\": \"dattasujay1\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/auth/login",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddToCart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"message\", function () {\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Product Added To Cart\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxM2U2NjcyNDQ0OTBmOTU2NzBlMzQiLCJ1c2VyRW1haWwiOiJkYXR0YXRyYXlmdWdhcmU3N0BnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo5NTYxNjI5MTkxLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI0OTkxNjAwLCJleHAiOjE3NTY1NDkyMDB9.83p4lw5Fp8oO7EectOlaVRE4mvT0G7i57UkhHGtXb2M",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"{{UserID}}\",\r\n    \"product\": {\r\n        \"_id\": \"{{ProductID}}\",\r\n        \"productName\": \"ZARA COAT 3\",\r\n        \"productCategory\": \"fashion\",\r\n        \"productSubCategory\": \"shirts\",\r\n        \"productPrice\": 31500,\r\n        \"productDescription\": \"Zara coat for Women and girls\",\r\n        \"productImage\": \"https://rahulshettyacademy.com/api/ecom/uploads/productImage_1650649434146.jpeg\",\r\n        \"productRating\": \"0\",\r\n        \"productTotalOrders\": \"0\",\r\n        \"productStatus\": true,\r\n        \"productFor\": \"women\",\r\n        \"productAddedBy\": \"admin@gmail.com\",\r\n        \"__v\": 0\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/user/add-to-cart",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"user",
+						"add-to-cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOrder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"message\", function () {\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Order Placed Successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check product_ID\", function(){\r",
+							"    var jsondata = pm.response.json();\r",
+							"    pm.expect(jsondata.productOrderId.toString()).to.equal(\"6581ca399fd99c85e8ee7f45\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxM2U2NjcyNDQ0OTBmOTU2NzBlMzQiLCJ1c2VyRW1haWwiOiJkYXR0YXRyYXlmdWdhcmU3N0BnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo5NTYxNjI5MTkxLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI0OTkxNjAwLCJleHAiOjE3NTY1NDkyMDB9.83p4lw5Fp8oO7EectOlaVRE4mvT0G7i57UkhHGtXb2M",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"orders\":\r\n [\r\n    {\r\n        \"country\": \"India\",\r\n        \"productOrderedId\": \"{{ProductID}}\"\r\n    }    \r\n ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{Url}}/order/create-order",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"order",
+						"create-order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOrderFromCart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check message\",function(){\r",
+							"\r",
+							"  var jsondata=  pm.response.json();\r",
+							"  pm.expect(jsondata.message).to.equal(\"Product Removed from cart\");\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxM2U2NjcyNDQ0OTBmOTU2NzBlMzQiLCJ1c2VyRW1haWwiOiJkYXR0YXRyYXlmdWdhcmU3N0BnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo5NTYxNjI5MTkxLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI0OTkxNjAwLCJleHAiOjE3NTY1NDkyMDB9.83p4lw5Fp8oO7EectOlaVRE4mvT0G7i57UkhHGtXb2M",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{Url}}/user/remove-from-cart/{{UserID}}/{{ProductID}}",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"user",
+						"remove-from-cart",
+						"{{UserID}}",
+						"{{ProductID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OrderDeatils",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxM2U2NjcyNDQ0OTBmOTU2NzBlMzQiLCJ1c2VyRW1haWwiOiJkYXR0YXRyYXlmdWdhcmU3N0BnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo5NTYxNjI5MTkxLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI0OTkxNjAwLCJleHAiOjE3NTY1NDkyMDB9.83p4lw5Fp8oO7EectOlaVRE4mvT0G7i57UkhHGtXb2M",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{Url}}/order/get-orders-details?id=66d16aedae2afd4c0b5fa3ec",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"order",
+						"get-orders-details"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "66d16aedae2afd4c0b5fa3ec"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetProductDeatilsFromCart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDkxM2U2NjcyNDQ0OTBmOTU2NzBlMzQiLCJ1c2VyRW1haWwiOiJkYXR0YXRyYXlmdWdhcmU3N0BnbWFpbC5jb20iLCJ1c2VyTW9iaWxlIjo5NTYxNjI5MTkxLCJ1c2VyUm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNzI0OTkxNjAwLCJleHAiOjE3NTY1NDkyMDB9.83p4lw5Fp8oO7EectOlaVRE4mvT0G7i57UkhHGtXb2M",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{Url}}/user/get-cart-products/64913e667244490f95670e34",
+					"host": [
+						"{{Url}}"
+					],
+					"path": [
+						"user",
+						"get-cart-products",
+						"64913e667244490f95670e34"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ProductID",
+			"value": "6581ca399fd99c85e8ee7f45",
+			"type": "string"
+		},
+		{
+			"key": "UserID",
+			"value": "64913e667244490f95670e34",
+			"type": "string"
+		}
+	]
+}

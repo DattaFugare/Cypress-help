@@ -1,0 +1,1 @@
+npx cypress run --record --key 436bbead-e9d3-48d4-b703-e09a0cfc0818 --parallel --ci-build-id '9k549i'   

@@ -1,0 +1,3 @@
+@echo off
+newman run postman/collection.json -e postman/QAEnv.json -r htmlextra --reporter-htmlextra-export newman/results/newman-report.html || echo 'Newman tests failed'
+

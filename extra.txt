@@ -1,0 +1,21 @@
+They are different concepts with different use cases.
+ An iframe is an entire separate page, 
+whereas a shadow DOM is a way to encapsulate part of a page for better modularity and style isolation.
+
+
+<my-component>
+  #shadow-root
+    <div>
+      <button id="myButton">Click Me</button>
+    </div>
+</my-component>
+
+
+cy.get('my-component')
+  .shadow()   // Enter the shadow DOM
+  .find('#myButton')
+  .click();   // Click the button inside the shadow DOM
+
+
+
+.shadow(): This is the Cypress command that enters the shadow DOM context. It must be used after selecting the shadow host element to interact with any shadow DOM elements.

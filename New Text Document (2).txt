@@ -1,0 +1,6 @@
+ TypeError: Cannot read properties of undefined (reading 'numericValue')
+      at <unknown> (D:\MyWrok\LightHouseCypress\node_modules\@cypress-audit\lighthouse\src\helpers.js:48:22)
+  at Array.forEach (<anonymous>)
+      at compareWithThresholds (D:\MyWrok\LightHouseCypress\node_modules\@cypress-audit\lighthouse\src\helpers.js:40:27)
+      at <unknown> (D:\MyWrok\LightHouseCypress\node_modules\@cypress-audit\lighthouse\src\task.js:33:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

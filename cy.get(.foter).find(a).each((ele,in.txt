@@ -1,0 +1,20 @@
+cy.get(".foter").find("a").each((ele,index,list)=>{
+
+
+
+
+   cy.wrap(ele).click();
+
+    cy.title();
+
+cy.go(-1)
+  
+}
+
+
+windowe:alrt
+ cy.get(loctore).trigger('mousehover')
+
+
+
+

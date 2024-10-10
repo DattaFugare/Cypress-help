@@ -1,0 +1,414 @@
+support /util/**
+ * Utility class for managing and providing endpoint URLs for various scenarios.
+ */
+class EndpointUtils {
+
+    // Register
+    REGISTER = 'register';
+
+    // Login
+    LOGIN = 'login';
+
+    // Users
+    LIST_USERS = 'users?page=2';
+    SINGLE_USER = 'users/2';
+    SINGLE_USER_NOT_FOUND = 'users/23';
+    USER = 'user';
+        
+}
+
+export default new EndpointUtils;
+
+import requestBodyRegisterSuccessful from '../../fixtures/register/register-successful.json';
+import requestBodyRegisterUnsuccessful from '../../fixtures/register/register-unsuccessful.json';
+
+import requestBodyLoginSuccessful from '../../fixtures/login/login-successful.json';
+import requestBodyLoginUnsuccessful from '../../fixtures/login/login-unsuccessful.json';
+
+import requestBodyUserCreate from '../../fixtures/users/user_create.json';
+import requestBodyUserUpdatePut from '../../fixtures/users/user_update_put.json';
+import requestBodyUserUpdatePatch from '../../fixtures/users/user_update_patch.json';
+/**
+ * Utility class for managing and providing request body data for various scenarios.
+ */
+class RequestBodyUtils {
+ 
+    // Register
+    REGISTER_SUCCESSFUL = requestBodyRegisterSuccessful;
+    REGISTER_UNSUCCESSFUL = requestBodyRegisterUnsuccessful;
+
+    // Login
+    LOGIN_SUCCESSFUL = requestBodyLoginSuccessful;
+    LOGIN_UNSUCCESSFUL = requestBodyLoginUnsuccessful;
+
+    // Users
+    USER_CREATE = requestBodyUserCreate;
+    USER_UPDATE_PUT = requestBodyUserUpdatePut;    
+    USER_UPDATE_PATCH = requestBodyUserUpdatePatch;
+    
+
+}
+
+export default new RequestBodyUtils;
+////////////////////////////////////////////////
+import requestBodyRegisterSuccessful from '../../fixtures/register/register-successful.json';
+import requestBodyRegisterUnsuccessful from '../../fixtures/register/register-unsuccessful.json';
+
+import requestBodyLoginSuccessful from '../../fixtures/login/login-successful.json';
+import requestBodyLoginUnsuccessful from '../../fixtures/login/login-unsuccessful.json';
+
+import requestBodyUserCreate from '../../fixtures/users/user_create.json';
+import requestBodyUserUpdatePut from '../../fixtures/users/user_update_put.json';
+import requestBodyUserUpdatePatch from '../../fixtures/users/user_update_patch.json';
+/**
+ * Utility class for managing and providing request body data for various scenarios.
+ */
+class RequestBodyUtils {
+
+    // Register
+    REGISTER_SUCCESSFUL = requestBodyRegisterSuccessful;
+    REGISTER_UNSUCCESSFUL = requestBodyRegisterUnsuccessful;
+
+    // Login
+    LOGIN_SUCCESSFUL = requestBodyLoginSuccessful;
+    LOGIN_UNSUCCESSFUL = requestBodyLoginUnsuccessful;
+
+    // Users
+    USER_CREATE = requestBodyUserCreate;
+    USER_UPDATE_PUT = requestBodyUserUpdatePut;    
+    USER_UPDATE_PATCH = requestBodyUserUpdatePatch;
+    
+
+}
+
+export default new RequestBodyUtils;
+
+
+
+
+/////////////////////////////////////
+/**
+ * Utility functions for making HTTP requests using Cypress and logging request and response details.
+ * @namespace
+ */
+const RequestUtils = {
+
+  /**
+   * Sends an HTTP request with the specified method, endpoint, and optional body.
+   * @param {string} method - The HTTP request method (GET, POST, PUT, DELETE, PATCH).
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @param {Object} [body=null] - The body of the HTTP request (optional).
+   * @returns {Object} - The Cypress request object.
+   */
+  sendRequest: (method, endpoint, body = null) => {
+    return cy.request({
+      method,
+      url: endpoint,
+      body,
+      failOnStatusCode: false, // Set the option to ignore status code failures
+    });
+  },
+
+  /**
+   * Sends a GET request and returns the response.
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @returns {Object} - The Cypress request object.
+   */
+  get: (endpoint) => {
+    return RequestUtils.sendRequest('GET', endpoint);
+  },
+
+  /**
+   * Sends a POST request and returns the response.
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @param {Object} requestBody - The body of the HTTP request.
+   * @returns {Object} - The Cypress request object.
+   */
+  post: (endpoint, requestBody) => {
+    return RequestUtils.sendRequest('POST', endpoint, requestBody);
+  },
+
+  /**
+   * Sends a PUT request and returns the response.
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @param {Object} requestBody - The body of the HTTP request.
+   * @returns {Object} - The Cypress request object.
+   */
+  put: (endpoint, requestBody) => {
+    return RequestUtils.sendRequest('PUT', endpoint, requestBody);
+  },
+
+  /**
+   * Sends a DELETE request and returns the response.
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @returns {Object} - The Cypress request object.
+   */
+  delete: (endpoint) => {
+    return RequestUtils.sendRequest('DELETE', endpoint);
+  },
+
+  /**
+   * Sends a PATCH request and returns the response.
+   * @param {string} endpoint - The endpoint or URL for the request.
+   * @param {Object} requestBody - The body of the HTTP request.
+   * @returns {Object} - The Cypress request object.
+   */
+  patch: (endpoint, requestBody) => {
+    return RequestUtils.sendRequest('PATCH', endpoint, requestBody);
+  },
+
+};
+
+export default RequestUtils;
+
+
+/**
+ * Utility functions for parsing and logging response body using Cypress.
+ * @namespace
+ */
+const ResponseUtils = {
+
+  /**
+   * Parses and logs the response body.
+   * @function
+   * @param {Object} response - The Cypress response object.
+   * @returns {Object} - The parsed response body.
+   * @throws Will throw an error if there is an issue parsing or logging the response body.
+   */
+  parseAndLogResponseBody: (response) => {
+    try {
+      const responseBody = response.body;
+      console.log(responseBody);
+      cy.log(responseBody);
+      return responseBody;
+    } catch (error) {
+      console.error('Error parsing and logging response body:', error.message);
+      throw error;
+    }
+  },
+
+};
+
+export default ResponseUtils;
+/**
+ * Utility functions for verifying response details using Cypress.
+ * @namespace
+ */
+const VerificationUtils = {
+
+    /**
+     * Asserts that the response status code matches the expected status code.
+     * @function
+     * @param {Object} response - The Cypress response object.
+     * @param {number} expectedStatusCode - The expected HTTP status code.
+     * @throws Will throw an error if the assertion fails.
+     */
+    assertResponseStatusCode: (response, expectedStatusCode) => {
+        cy.addTestContext(`Asserts that Response Status code is '${expectedStatusCode}'.`)
+        expect(response.status).to.equal(expectedStatusCode);   
+    },
+
+    /**
+     * Asserts that the response body contains the specified key.
+     * @function
+     * @param {Object} responseBody - The parsed response body.
+     * @param {string} expectedKeyName - The expected key in the response body.
+     * @throws Will throw an error if the assertion fails.
+     */
+    assertResponseBodyKeyPresent: (responseBody, expectedKeyName) => {
+        cy.addTestContext(`Asserts that Response Body has property: '${expectedKeyName}'.`)
+        expect(responseBody).to.have.property(expectedKeyName);
+    },
+
+    /**
+     * Asserts that the response body key has the expected value.
+     * @function
+     * @param {Object} responseBody - The parsed response body.
+     * @param {string} expectedKeyName - The expected key in the response body.
+     * @param {*} expectedValue - The expected value for the specified key.
+     * @throws Will throw an error if the assertion fails.
+     */
+    assertResponseBodyKeyValue: (responseBody, expectedKeyName, expectedValue) => {
+        cy.addTestContext(`Asserts that Response Body has key: '${expectedKeyName}' with value: '${expectedValue}'.`);
+        expect(responseBody[expectedKeyName]).to.equal(expectedValue);
+    }    
+
+};
+
+export default VerificationUtils;
+
+
+////////////////////////////////////////////////////////////////
+/**
+ * WaitUtils class provides methods for introducing waits during test execution.
+ */
+class WaitUtils{
+
+    /**
+     * Waits for the given amount of time in seconds.
+     * @param {number} timeInSeconds - The time to wait in seconds.
+     */
+    waitForGivenTime(timeInSeconds){
+        console.log(`Waiting for '${timeInSeconds}' seconds.`)
+        cy.wait(timeInSeconds * 1000)
+    }
+
+}
+
+/**
+ * Exports the Waits class as the default export of this module.
+ * @module WaitUtils
+ */
+export default new WaitUtils;
+
+
+//////////////////////////////////////////////////////////////////////
+
+/**
+ * VerificationUtils class provides methods for asserting different conditions.
+ */
+class VerificationUtils{
+
+    /**
+     * Asserts that an element contains the expected text.
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} expectedText - The expected text.
+     */
+    elementContainsText(targetElement, expectedText){
+        console.log(`Asserts that an element contains the expected text '${expectedText}'.`)
+        targetElement.should('include.text', expectedText)
+    }
+
+    /**
+     * Asserts that an element has the expected text.
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} expectedText - The expected text.
+     */
+    elementHasText(targetElement, expectedText){
+        console.log(`Asserts that an element has the expected text '${expectedText}'.`)
+        targetElement.should('have.text', expectedText)
+    }
+
+    /**
+     * Asserts that an element is visible.
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} targetElementName - The name of the target element.
+     */
+    elementIsVisible(targetElement, targetElementName){
+        console.log(`Asserts that '${targetElementName}' is visible.`)
+        targetElement.should('be.visible')
+    }
+
+    /**
+     * Asserts that an element is not visible.
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} targetElementName - The name of the target element.
+     */
+    elementIsNotVisible(targetElement, targetElementName){
+        console.log(`Asserts that '${targetElementName}' is not visible.`)
+        targetElement.should('not.exist')
+    }
+
+    /**
+     *  Asserts the count of visible elements.
+     * @param {ElementHandle} targetElement - The target element to check.
+     * @param {string} targetElementName - The name or identifier of the target element.
+     * @param {string} expectedCount - The expected count of elements.
+     * 
+     */
+     async elementsCount(targetElement, targetElementName, expectedCount){
+        if(expectedCount == 1){
+            console.log(`Asserts that ${expectedCount} '${targetElementName}' is visible.`);
+        }else{
+            console.log(`Asserts that ${expectedCount} '${targetElementName}' are visible.`);
+        }
+
+        targetElement.should('have.length',expectedCount)
+    }
+
+    /**
+     * Asserts that an element has a specific attribute with the expected value.
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} targetElementName - The name of the target element.
+     * @param {string} attribute - The attribute to check.
+     * @param {string} attributeValue - The expected value of the attribute.
+     */
+    elementHasAttributeAndHasValue(targetElement, targetElementName, attribute, attributeValue){
+        console.log(`Asserts that '${targetElementName}' has a specific attribute '${attribute}' with the expected value '${attributeValue}'.`)
+        targetElement.should('have.attr', attribute, attributeValue);
+    }    
+
+    /**
+     * Asserts that an element has a specific CSS property with the expected value.
+     *
+     * @param {Object} targetElement - The target element to check.
+     * @param {string} targetElementName - The name of the target element.
+     * @param {string} property - The CSS property to check.
+     * @param {string} propertyValue - The expected value of the CSS property.
+     */
+    elementHasCSSPropertyAndHasValue(targetElement, targetElementName, property, propertyValue){
+        console.log(`Asserts that '${targetElementName}' has a specific attribute '${property}' with the expected value '${propertyValue}'.`)
+        targetElement.should('have.css', property, propertyValue);
+    }    
+
+    /**
+     * Asserts that the current page URL contains the expected substring.
+     * @param {string} expectedUrl - The expected substring in the URL.
+     */
+    pageContainsUrl(expectedUrl){   
+        const currentPageUrl = cy.url()        
+        console.log(`Asserts that the current page URL '${currentPageUrl}' contains the expected substring '${expectedUrl}'.`)
+        currentPageUrl.should('include', expectedUrl);
+    }
+
+    /**
+     * Asserts that the current page URL matches the expected substring.
+     * @param {string} expectedUrl - The expected substring in the URL.
+     */
+    pageHasUrl(expectedUrl){
+        console.log(`Asserts that the current page URL matches the expected substring '${expectedUrl}'.`)
+        cy.url().should('eq', expectedUrl);
+    }   
+
+    /**
+     * Asserts that the current page Title contains the expected substring.
+     * @param {string} expectedTitle - The expected substring in the Title.
+     */
+    pageContainsTitle(expectedTitle){   
+        const currentPageTitle = cy.title()         
+        console.log(`Asserts that the current page Title '${currentPageTitle}' contains the expected substring '${expectedTitle}'.`)
+        currentPageTitle.should('include', expectedTitle);
+    }
+
+    /**
+     * Asserts that the current page Title matches the expected substring.
+     * @param {string} expectedTitle - The expected substring in the Title.
+     */
+    pageHasTitle(expectedTitle){        
+        console.log(`Asserts that the current page Title matches the expected substring '${expectedTitle}'.`)
+        cy.title().should('eq', expectedTitle);
+    }
+
+}
+
+
+/**
+ * Exports the VerificationUtils class as the default export of this module.
+ * @module VerificationUtils
+ */
+export default new VerificationUtils;
+//////////////////////////////////////////////////////////////////////
+const TestFilters = (givenTags, runTest) => {
+    if (Cypress.env('tags')) {
+      const tags = Cypress.env('tags').split(',')
+      const isFound = givenTags.some((givenTag) => tags.includes(givenTag))
+  
+      if (isFound) {
+        runTest()
+      }
+    } else {
+      runTest()
+    }
+  };
+  
+  export default TestFilters

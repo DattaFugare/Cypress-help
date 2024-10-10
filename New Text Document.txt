@@ -1,0 +1,82 @@
+     feature:
+// dev 3--1 QA  this range  ex 9dev-3 QA
+
+     epic: signup
+    desc:->
+            1  acceptance  criteria
+               a) valid user / password 
+               b) user should able to see close button in enable state 
+                c) user shuld be able to see sign in button ebale state
+               d) user see crosss icon for cancel or closing tab
+               e) user should be able to see appropritate text in textbox.
+               f) sign up tab should be similler to figama desing 
+            
+
+    as auto QA ;  a) valid user / password 
+                  b)  user should able to see close button in enable state
+                c) user shuld be able to see sign in button ebale state
+                  e) user should be able to see appropritate text in textbox.
+
+
+     stories:  
+   storie 1
+
+1) user can see similler ui as figma desing   
+2) Acceptance criteria :--> //singup text on left top corner as per figma diagram
+                           // "user": Username  test should per the figma 
+                           //text Password: as per the figma 
+                         ////  size of the both texboxes should be as per figma
+                           ////close and signup button size and color should be as per figma
+                         //  cross icon on the top right of tab should br as per the figma 
+
+
+     storie 2 
+  user able to signup with valid details 
+
+1 acceptance crietria :
+  1) after clicking on signup button by using valid pass and name user should be to singup 
+2) by clicking on close button or cross icon user should be navigate to homepage
+3) on reclicking signup button fron homepage previce text/details should be clear 
+
+ story 3
+Api for sign up 
+
+method name post 
+
+baseurl:https://www.demoblaze.com/
+endpoint: NA
+
+story 4
+
+user singup database 
+ description: 
+acceptace criteria:  1 data should be store in then username in usename column and password in password table.
+
+/////////////////////////////////  refenment metting  depends on  20,21,22 per hr meeting --->  descssion on stories and resorce need and Qa notes for item test in current story or not
+
+////// planning meeting on 23 aug 2 hr ---> story estimation and and drag story from backlog to sprint  and sprint started 
+// daily standup meeting :-->  story asssing to dev , and maual QA write status case for stories 
+
+
+/// 4 sept sprintreview metting .. udate to up that this story is not done bcz of this reason (auto work:--> srint-1 why    not work) 
+  // 6 spet .  QA auto resgression done then eod -> retrospective meeting all member -->  previcee action item ||  what went well  || what went wrong || what will be better 
+
+|| action item|| Kudos 
+
+
+previcee action item and  acton item for PO/ Screm .
+
+
+// 9 spet ... demo to client / stackholder
+
+// severity priporty and ceremony , buglife cycle ;
+
+
+
+
+
+
+
+
+
+

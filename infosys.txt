@@ -1,0 +1,120 @@
+1. What is the frame work u have worked and explain the framework with folder structure? 2. purely based on testing, different testing types like functional and non functional tests 3. real time scenarios like last min bugs before release? how to handle? 4. Integration testing types 5. bug tracking tools and agile methods 6. retesting and regression testing concepts
+
+Test Engineer interview questions on frameworks, testing types, bug tracking, and regression testing.
+
+Worked with Selenium framework with folder structure of test cases, test data, and page objects
+
+Functional testing includes smoke, sanity, and regression testing while non-functional testing includes performance and security testing
+
+Real-time scenario: prioritize and fix critical bugs first, communicate with stakeholders, and perform thorough testing before release
+
+Integration testing types include top-down, bottom-up, and big-bang testing
+
+Bug tracking tools: JIRA, Bugzilla, and Trello. Agile methods: Scrum and Kanban
+
+Retesting: testing the same functionality again after fixing the bug. Regression testing: testing the entire system after making changes
+
+
+What should be the Test cases of a Music Player?
+Test cases for a Music Player
+
+Test playback of different file formats
+
+Test volume control functionality
+
+Test shuffle and repeat options
+
+Test playlist creation and management
+
+Test search functionality
+
+Test interruption handling (e.g. phone call)
+
+Test compatibility with different headphones/speakers
+
+Test battery consumption
+
+Test user interface and user experience
+Check Media Player should be installed in Mobile.
+
+Check Media Player should support the Mobile OS.
+
+Check Media Player should evoke effortlessly with one action.
+
+Check Media Player should be close effortlessly.
+
+Check Media Player should have controllers like Play, Pause, Next, Previous, Stop, Close, Volume increase and decrease button, Contrast increase, and decrease button.
+
+Check Media Player should be able to work and display in both Portrait and Landscape view.
+
+Check Media Player should maintain its consistency of controllers in both Portrait and Landscape views.
+
+Check Media Player should be able to run Video files of any format like AVI, MKV, etc.
+
+Check Media Player should be able to run an audio file of any format like mp3, WAV, etc.
+
+Check Media Player is able or not able to run Video files of any quality like 3GP, MP4, Low Definition, High Definition, 144p, 240p, 360p, 480p, 720p, 1080p, etc.
+
+Check whether Media Player is able or not able to run Audio files of any quality, bit rate, or bandwidth.
+
+Check whether Media Player is able or not able to change the Aspect ratio.
+
+Check whether Media Player is able or not able to change the Crop.
+
+Check whether Media Player is able or not able to update from the internet.
+
+Check Media Player should be able to run the Audio or Video files from SD / Memory Card.
+
+Check Media Player should be able to run the Audio or Video files from Phone Memory / Internal Memory.
+
+Check that Media Player is able or not able to run the Audio or Video files from the internet.
+
+Check Media Player should continue to run the Video file if Media Player goes to backgrounds or minimizes.
+
+Check Media Player should continue to run the Audio file if Media Player goes to backgrounds or minimizes.
+
+Check Media Player should be able to Stop or Minimize if pressing the Back button one or two times.
+
+Check Media Player should have Media Library files.
+
+Check Media files in Media Player’s Media Library should be a shuffle, Add, Remove Media files.
+
+Check Media files in Media Player’s Media Library should be Add Media files.
+
+Check that Media files in Media Player’s Media Library should be Remove Media files.
+
+Check that Audio and Video files both can be added, shuffled, and Removed from the Media Library of the Media Player.
+
+Check that Video files of different quality and sizes should work correctly on Play- The pause-Play action, that image of videos should not be a break, the voice should not be break, lag or lead with the video.
+
+Check that Audio files of different quality and sizes should work correctly on Play- The pause-Play action, that audio should not break, lag, or lead.
+
+Check that Media Player is able to keep on the run or not any Video or Audio file if tapping on the Back button and minimizing the app.
+
+Check that Media Player is able to resume playing if any paused Video or Audio file in-app in minimizing condition then evoke.
+
+Check that two Video files can able to run in two different Media Players simultaneously on a device.
+
+Check that one Video and one Audio file can able to run in two different Media Players simultaneously on a device.
+
+Check that one Video and one Audio file can able to run in two different Media Players simultaneously on a device.
+
+
+
+
+
+
+
+
+What are different transformations in big data testing
+Different transformations in big data testing include data mapping, data conversion, data aggregation, and data filtering.
+
+Data mapping involves mapping data from one format to another
+
+Data conversion involves converting data from one type to another
+
+Data aggregation involves combining data from multiple sources
+
+Data filtering involves selecting specific data based on certain criteria
+
+Examples include transforming data from CSV to JSON, converting data from string to integer, aggregating data from multiple databases, and filtering data based on date range

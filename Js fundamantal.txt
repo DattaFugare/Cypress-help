@@ -1,0 +1,164 @@
+Javascript fundamentals for Automation Testing
+
+i. Variables declaration and assignment
+
+In JavaScript, variables are containers for storing data values. You can declare and assign variables using var, let, or const. Each has different characteristics that affect how the variable behaves in terms of scope, hoisting, and mutability.
+
+1. var
+Scope: var is function-scoped.
+          If a variable is declared with var inside a function, it is only accessible within that function. 
+          If declared outside any function, it becomes a global variable.
+
+Hoisting: var declarations are hoisted to the top of their scope,
+          meaning the variable is available before its declaration 
+          but is initialized as undefined.
+Reassignment: Variables declared with var can be reassigned new values.
+
+2.let
+Scope: let is block-scoped.
+       It is only accessible within the block, statement, or expression where it is declared.
+Hoisting: Like var, let is hoisted, but unlike var, 
+          it is not initialized until the line where it is declared (a behavior known as"temporal dead zone").
+Reassignment: Variables declared with let can be reassigned new values.
+3. const
+Scope: const is also block-scoped, like let.
+Hoisting: const is hoisted to the top of the block, but it is not initialized (similar to let).
+Reassignment: Variables declared with const cannot be reassigned. They are constant references,
+              meaning the value it holds is immutable,  
+              but if it holds an object or array, the content of the object or array can be changed.
+1. typeof()
+
+  In JavaScript, the typeof operator is used to determine the data type of a given variable or expression
+  It helps in writing type-safe code, especially in dynamic typing environments. 
+
+ii. Decision making
+          This is typically done using conditional statements such as if, else if, else, and switch. 
+
+         if 
+           statement is used to execute a block of code only if a specified condition is true.
+     else 
+           else statement is used to execute a block of code if the condition in the if statement is false.
+     
+   else-if 
+          the else if statement is used to specify a new condition to test if the first condition is false.
+   switch
+            The switch statement is used to execute one block of code from multiple options based on the value of a variable
+            or   expression. It's an alternative to multiple else if statements.
+  Ternary Operator (? :)
+    The ternary operator is a shorthand for if-else statements. It’s used for making quick decisions in a single line.
+
+     Logical operators (&&, ||, !) are often used to combine or invert conditions in decision-making.
+
+
+Summary:
+if statement: Executes a block of code if a specified condition is true.
+else statement: Executes a block of code if the condition in the if statement is false.
+else if statement: Tests a new condition if the previous if condition was false.
+switch statement: Selects one of many code blocks to execute based on the value of an expression.
+Ternary operator: Provides a quick way to make decisions in a single line.
+Logical operators: Combine or invert conditions for more complex decision-making.
+
+ Loops
+
+1. for Loop
+The for loop is the most common type of loop in JavaScript. It is typically used when you know how many times you want to iterate.
+2.while Loop
+The while loop executes a block of code as long as the specified condition is true. It’s useful when the number of iterations is not known beforehand.
+3. do...while Loop
+The do...while loop is similar to the while loop, but it guarantees that the code block will be executed at least once, even if the condition is false initially.
+
+4. for...in Loop
+The for...in loop is used to iterate over the properties of an object. It enumerates all the enumerable properties of an object that are keyed by strings (including inherited properties).
+5. for...of Loop
+The for...of loop is used to iterate over iterable objects like arrays, strings, maps, sets, etc. It is ideal for iterating over the values of an iterable.
+
+6. Breaking and Continuing Loops
+break: Terminates the loop entirely.
+continue: Skips the current iteration and moves to the next one.
+
+
+
+Summary:
+for loop: Ideal for a known number of iterations.
+while loop: Suitable when the number of iterations is unknown, but you want to repeat until a certain condition is false.
+do...while loop: Ensures the loop body is executed at least once.
+for...in loop: Best for iterating over object properties.
+for...of loop: Ideal for iterating over iterable objects like arrays or strings.
+break and continue: Control the flow of loops by breaking out of them or skipping to the next iteration, respectively.
+
+
+
+
+
+
+
+
+
+Keywords
+
+JavaScript keywords are the building blocks of the language. Understanding how each keyword functions and where it is used is essential for writing clean, efficient, and maintainable JavaScript code. These keywords control the structure, flow, and behavior of JavaScript programs, making them fundamental to mastering the language.
+
+
+delete: Removes a property from an object. in: Checks if a property exists in an object. NaN: Represents a value that is "Not-a-Number" . undefined: Indicates that a variable has been declared but has not yet been assigned a value. null: Represents an intentional absence of any object value. instanceof: Checks if an object is an instance of a specific class or constructor. typeof: Returns a string indicating the type of a variable. import: Imports variables, functions, or objects from a module.  export: Exports variables, functions, or objects from a module so they can be imported into another module. await: Pauses the execution of an async function and waits for a Promise to resolve. async: Declares an asynchronous function, which returns a Promise.  this: Refers to the current object or execution context. In a method, this refers to the owner object. In global scope, this refers to the global object. new: Creates an instance of an object from a class or constructor function.   super: Refers to the parent class and is used to call its constructor or methods. extends: Used to create a subclass or child class, inheriting from a parent class.  constructor: A special method for initializing new objects created by a class.  class: Introduces a class, a blueprint for creating objects . throw: Allows you to create a custom error. finally: Defines a block of code that will run after the try and catch blocks, regardless of the outcome. catch: Defines a block of code to handle any errors thrown by the try block.. try: Defines a block of code to test for errors during execution. return: Exits a function and optionally returns a value. function: Declares a function, a reusable block of code that can be executed when called  do...while: Similar to while, but ensures that the loop body is executed at least once. while: Creates a loop that repeats as long as a specified condition is true.  for: Used to create a loop that repeats until a specified condition is false.     case: Defines a possible value for the switch expression to match against.
+
+default: Specifies code to be executed if no case matches the switch expression.
+
+
+
+
+ Arrays and operations
+1. push()
+2. pop()
+3. unshift()
+4. indexOf()
+5. includes()
+6. slice()
+7. filter()
+8. map()
+9. sort()
+10. reverse()
+vi. Functions
+1. Custom
+   Custom functions are ones you define yourself to perform specific tasks. They help in making code reusable and more organized.
+2. Anonymous
+    Anonymous functions are functions that do not have a name. They are often used as arguments to other functions or for short-term use.
+vii. String:->Strings in JavaScript are a data type used to represent text
+1. length
+2. charAt()
+3. slice()
+4. indexOf()
+5. split()
+6. trim()
+7. parseInt()
+8. toString()
+
+viii. Javascript Object
+
+In JavaScript, an object is a collection of key-value pairs. Objects are used to store data in a structured way and can hold various types of values including other objects, arrays, functions, and primitive data types.
+
+ix. Classes and Objects
+JavaScript, classes and objects provide a way to model and manage data more effectively. With the introduction of ES6 (ECMAScript 2015), classes were added to JavaScript, offering a more structured way to define objects and their behaviors
+
+OOP concepts
+Object-Oriented Programming (OOP) is a paradigm that organizes code into objects, which bundle data and methods together. JavaScript supports OOP principles, allowing you to create and manage objects in a structured way. Here’s a breakdown of key OOP concepts with examples:s
+Classes: Templates for creating objects.
+Objects: Instances of classes containing data and methods.
+Encapsulation: Bundling data and methods and restricting access to some components.
+Inheritance: Deriving new classes from existing ones, promoting code reuse.
+Polymorphism: Different classes can have methods with the same name but different implementations.
+Abstraction: Hiding complex details and providing a simple interface.
+These OOP concepts help in creating more modular, maintainable, and reusable code in JavaScript.
+
+collections
+
+In JavaScript, collections are data structures that hold multiple values. 
+The primary collections in JavaScript are Arrays, Sets, and Maps
+
+Arrays:
+
+   Arrays are ordered collections of values. They can hold elements of any type(hetiro), including numbers, strings, objects, and even other arrays.
+
+Sets
+Sets are collections of unique values. They automatically handle duplicates and are useful for ensuring that no value appears more than once.
+Maps
+Maps are collections of key-value pairs where keys can be of any type, and each key is unique. Maps maintain the order of elements based on their insertion.

@@ -1,0 +1,347 @@
+terminology in GitHub actions:->
+Key-Value Explanation:
+name:
+
+Key: name
+Value: The name of your workflow.
+Purpose: Provides a descriptive label for the workflow. This is displayed in the GitHub Actions tab.
+Example Values:
+CI - Test on Push
+Lint on Pull Request
+Automated Nightly Release
+Manual Deployment
+on:
+
+Key: on
+Value: The event that triggers the workflow.
+Purpose: Specifies when the workflow should run, such as on a push, pull request, or schedule.
+Example Values:
+push: Triggered when code is pushed to the repository.
+pull_request: Triggered when a pull request is made.
+schedule: Triggered at specific times defined by cron expressions.
+workflow_dispatch: Allows manual triggering of the workflow.
+branches:
+
+Key: branches
+Value: A list of branches that the event applies to.
+Purpose: Specifies which branch or branches the event (push/pull request) must target for the workflow to run.
+Example Value:
+main: The workflow will only run when the event occurs on the main branch.
+jobs:
+
+Key: jobs
+Value: A set of jobs to execute in the workflow.
+Purpose: Defines the tasks to be run as part of the workflow. A workflow can have multiple jobs, and they can run sequentially or in parallel.
+Example Values:
+test: A job that runs tests.
+lint: A job that runs code linting.
+build-and-release: A job that builds the project and creates a release.
+deploy: A job that deploys the application.
+runs-on:
+
+Key: runs-on
+Value: Specifies the type of runner (virtual machine) the job will run on.
+Purpose: Defines the operating system/environment for running the job. GitHub Actions provides hosted runners such as Ubuntu, Windows, and macOS.
+Example Value:
+ubuntu-latest: The job will run on the latest version of an Ubuntu virtual machine.
+steps:
+
+Key: steps
+Value: A list of actions and commands that make up the job.
+Purpose: Defines the individual tasks or actions that the job will perform. These can include checking out code, setting up dependencies, running tests, deploying code, etc.
+Example Values:
+Checkout code: A step that uses the actions/checkout@v2 action to pull the repository’s code.
+Install dependencies: A step that runs npm install to install the project's dependencies.
+Run tests: A step that runs npm test to execute tests.
+Deploy to production: A step that runs a deployment script.
+
+
+uses:
+
+Key: uses
+Value: Specifies an external action from the GitHub Actions marketplace or a custom action.
+Purpose: Calls reusable actions that perform common tasks, such as checking out code, setting up environments, or creating releases.
+Example Values:
+actions/checkout@v2: An action to check out your repository’s code.
+actions/setup-node@v2: An action to set up a Node.js environment.
+actions/create-release@v1: An action to create a new GitHub release.
+with:
+
+Key: with
+Value: A set of parameters or options passed to an action.
+Purpose: Provides inputs to configure the behavior of an action. The exact parameters depend on the action you’re using.
+Example Values:
+node-version: '14': Specifies the version of Node.js to use in the setup-node action.
+tag_name: nightly-${{ github.sha }}: Specifies the tag for a new release.
+draft: false: Indicates whether the release is a draft or not.
+run:
+
+Key: run
+Value: A shell command to execute.
+Purpose: Runs a specific command or series of commands as part of the job. This is often used for running tests, installing dependencies, building the project, or deploying code.
+Example Values:
+npm install: Installs Node.js dependencies.
+npm run lint: Runs the code linter to check for code quality issues.
+npm run build: Builds the project.
+./deploy.sh: Runs a deployment script.
+Putting It All Together:
+Each of the workflows you provided is structured with these key-value pairs to define what should happen when an event occurs. For example:
+
+Continuous Integration (CI) on Push: Runs tests automatically when code is pushed to the main branch.
+Linting on Pull Request: Runs a linter to check code quality when a pull request is opened against the main branch.
+Automated Nightly Release: Builds the project and creates a release every day at midnight using a scheduled event.
+Manual Deployment: Deploys the application when manually triggered via workflow_dispatch.
+Summary:
+Each key in the YAML file is essential for defining the workflow's structure and behavior:
+
+name: Identifies the workflow.
+on: Specifies the trigger event(s).
+jobs: Defines the work that needs to be done.
+steps: Breaks down the job into smaller tasks.
+uses and with: Leverage external actions with configurable parameters.
+run: Executes specific shell commands.
+By combining these key-value pairs, you can automate testing, deployment, and other tasks directly from your GitHub repository.
+
+
+
+
+Workflow:
+A workflow is an automated process made up of one or more jobs. Workflows are defined in YAML files and stored in the .github/workflows directory of your repository.
+
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:   // <---job name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+
+Events:
+GitHub Actions workflows are triggered by specific events, such as a push to a branch, a pull request, or a scheduled event (like running a job daily). Common triggers include:
+
+push
+pull_request
+schedule
+workflow_dispatch (manually triggered)
+
+Jobs:
+A workflow can contain one or more jobs. Each job runs on a virtual machine (also called a runner) and performs a series of steps. Jobs in the same workflow can run sequentially or in parallel. You can define dependencies between jobs if one needs to finish before another starts.
+
+Steps:
+Each job consists of individual steps that run sequentially. A step can either run a shell command (run) or use a predefined GitHub Action (uses). Steps are the smallest unit of execution in a job.
+
+Actions:
+Actions are reusable commands that perform a specific task in your workflow. GitHub provides many official actions (e.g., checking out code, setting up languages, etc.), and you can also write your own custom actions or use actions created by the community
+
+Runners:
+Runners are servers that execute the jobs defined in your workflow. GitHub provides hosted runners for common operating systems like Ubuntu, macOS, and Windows. You can also set up self-hosted runners if you need more control over the environment.
+
+
+Common Use Cases:
+Continuous Integration: Automatically running tests when code is pushed to a repository.
+Continuous Deployment: Deploying code to a production server whenever certain conditions are met (e.g., after a successful build).
+Automating Releases: Tagging new releases and pushing them to package repositories like npm or Docker Hub.
+Code Linting: Automatically checking code for style violations and other quality issues.
+
+
+Example: Workflow to Run Tests on Every Push
+name: Test on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+This workflow triggers whenever a push occurs on the main branch, installs the dependencies, and runs the tests.
+
+Summary:
+GitHub Actions automates your workflow directly within GitHub.
+Workflows consist of events, jobs, and steps, which are defined in YAML configuration files.
+It's a powerful tool for CI/CD, allowing you to test, build, and deploy code automatically based on events in your GitHub repository.
+
+
+
+
+
+
+
+
+examples
+
+1. push Event (Continuous Integration: Automatically running tests when code is pushed to a repository)
+The push event triggers a workflow when code is pushed to a specified branch.
+
+name: CI - Test on Push
+
+on:
+  push:
+    branches:
+      - main   # Only trigger on pushes to the main branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+
+Explanation: This workflow triggers when code is pushed to the main branch. It runs the CI pipeline, which includes installing dependencies and running tests. This is useful for Continuous Integration, ensuring that every code push is tested before being merged into the production branch.
+
+
+2. pull_request Event (Code Linting: Automatically checking code for style violations and other quality issues)
+The pull_request event triggers a workflow when a pull request is opened, synchronized, or reopened.
+
+Example: Linting Code on Pull Request.
+
+
+name: Lint on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main   # Trigger only on PRs targeting the main branch
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: npm run lint
+Explanation: This workflow triggers when a pull request is opened or updated for the main branch. It runs a linter to check the code for any style or syntax violations, ensuring code quality before merging.
+
+
+
+3. schedule Event (Automating Releases: Tagging new releases and pushing them to package repositories)
+The schedule event triggers workflows based on a cron schedule (e.g., daily, weekly).
+
+Example: Automating Nightly Builds and Releases
+
+name: Automated Nightly Release
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # Runs every day at midnight UTC
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Create a new release
+        uses: actions/create-release@v1
+        with:
+          tag_name: nightly-${{ github.sha }}
+          release_name: Nightly Build ${{ github.sha }}
+          draft: false
+Explanation: This workflow runs nightly at midnight (UTC). It builds the project and automatically creates a new release with a tag for the nightly build. This is useful for automating releases and ensuring that the latest code is regularly packaged and ready for distribution.
+
+4. workflow_dispatch Event (Continuous Deployment: Deploying code to a production server whenever certain conditions are met)
+The workflow_dispatch event allows you to manually trigger a workflow via the GitHub UI. This is useful for deploying code on demand.
+
+Example: Manually Triggered Deployment
+
+name: Manual Deployment
+
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to production
+        run: ./deploy.sh   # Replace with your actual deployment script
+Explanation: This workflow is triggered manually from the GitHub Actions UI. When triggered, it runs the deployment script to push the latest code to the production environment. This is useful when you want to control exactly when the deployment happens (e.g., after a successful build and manual approval).
+
+Summary of Use Cases with Events:
+push: Used for Continuous Integration workflows that run automatically when code is pushed to a branch, such as running tests.
+pull_request: Used for Code Linting or other quality checks, ensuring code in pull requests meets standards before merging.
+schedule: Used for Automating Releases or running regular tasks like nightly builds or deployments.
+workflow_dispatch: Used for Continuous Deployment, allowing manual control over deployment triggers.
+
+
+
+
+
+
+
+

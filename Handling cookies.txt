@@ -1,0 +1,37 @@
+////////////////////////login cookies stores///////////////////////////////////
+describe('Login and Save Cookie', () => {
+
+  it('Logs in and saves the session cookie', () => {
+    cy.visit('/login');
+    
+    cy.get('input[name="username"]').type('admin');
+    cy.get('input[name="password"]').type('password');
+    cy.get('button[type="submit"]').click();
+    
+    // Assert that login was successful by checking the presence of a logout button
+    cy.contains('Logout').should('be.visible');
+    
+    // Save the session cookie (example name is 'session_id')
+    cy.getCookie('session_id').then((cookie) => {
+      cy.writeFile('cypress/fixtures/session.json', { session_id: cookie.value });
+    });
+  });
+});
+////////////////////////////////////// stored log in cookies set for subsequent tests cases  /////////////////////////////////////////
+
+describe('Reuse Session Cookie', () => {
+  before(() => {
+    // Read the session cookie from the file
+    cy.readFile('cypress/fixtures/session.json').then((session) => {
+      cy.setCookie('session_id', session.session_id);
+    });
+  });
+  
+  it('Visits a protected page without logging in', () => {
+    // Now that the session cookie is set, visit the protected page
+    cy.visit('/dashboard');
+    
+    // Assert that the dashboard is accessible without logging in
+    cy.contains('Welcome to your Dashboard').should('be.visible');
+  });
+});

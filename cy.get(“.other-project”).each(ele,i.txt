@@ -1,0 +1,10 @@
+cy.get(“.other-project”).each(ele,index,list)=>{
+
+  console.log( ele.text());
+
+   if (ele.cantains(“Wikinews”))
+{
+       ele.click()
+}
+
+}

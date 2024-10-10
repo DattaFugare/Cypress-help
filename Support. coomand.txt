@@ -1,0 +1,425 @@
+Cypress.Commands.add('goToApplication', () => {
+    
+    // Retrieve the application URL from Cypress environment variables
+    const url = Cypress.env('application_URL')
+    
+    // Log the navigation action
+    cy.log('Navigating to application: ' + url)
+
+    // Visit the application URL
+    cy.visit(url)
+})
+//////////////////////////////////////////////////////////////
+
+
+Cypress.Commands.add('selectProduct', (productName) => { 
+    cy.get("h4[class='card-title']").each((el, index, $list) => {
+        if(el.text().includes(productName)){
+          //Clicking on the Add button present under productName
+          cy.get('button.btn.btn-info').eq(index).click()
+        }
+    })
+})
+
+//Navigate to application using visit()
+Cypress.Commands.add('goToApplication_AutomationPractice', () => { 
+    //cy.visit('https://rahulshettyacademy.com/angularpractice/')
+    cy.visit(Cypress.env("application_URL_AutomationPractice")) 
+})
+
+
+//Login to application using APIs (Inject JWT token into Browswer's Local storage)
+Cypress.Commands.add('loginToApplication_UsingAPI', () => { 
+   
+    //request() -> Method to make the API calls
+    cy.request(
+        //HTTP method
+        "POST",
+        //Request URL
+        "https://www.rahulshettyacademy.com/api/ecom/auth/login",
+        //Request Body
+        {
+            "userEmail":"testtmail95@gmail.com", 
+            "userPassword":"HiRahul@123"
+        }
+    ).then((response)=>{
+        //Assertion for Response status code
+        expect(response.status).to.eq(200);
+
+        //Assertion for Response body
+        expect(response.body).to.have.property(
+            "message","Login Successfully"
+        );
+
+        //Extract the Token and setting it as an Cypress environment variable
+        //This token will be available in entire project
+        Cypress.env('token_login',response.body.token); 
+        
+        //Use this, if you are getting token in Response Headers
+        //Cypress.env('token_login',response.headers.token); 
+        
+    });
+
+})//loginToApplication_UsingAPI
+
+
+// //Click using click()
+// Cypress.Commands.add('clickOnElement', (element) => { 
+//    //element.click()
+
+//    element.each(($el, index, $list) => {
+//     // $el is a wrapped jQuery element
+//         cy.wrap($el).click()
+//   })
+
+// })
+
+// // Fill TextBox using type()
+// Cypress.Commands.add('fillTextBox', (element, textToBeFilled) => { 
+//    // element.type(textToBeFilled)
+//     element.each((el, index, $list) => {
+//             cy.wrap(el).click()
+//     })
+//  })
+
+ 
+// Wait for 2 seconds using wait()
+Cypress.Commands.add('waitForSomeTime', () => { 
+    cy.wait(2000)
+})
+
+// Wait for Given time using wait()
+Cypress.Commands.add('waitForGivenTime', (timeInSeconds) => { 
+    cy.wait(timeInSeconds*1000)
+})
+
+///////////////////////////////////////////////
+describe('Section_17_RS_UI_Tests_AngularPractice - Test Suite - Rahul Shetty',function(){
+    
+    it('Test case for - Parse CSV file',async function(){
+    
+      //Get the Project path
+      const projectPath = Cypress.config("fileServerFolder");
+
+      //Convert file to text
+      cy.readFile(projectPath+"/cypre ss/downloads/order-invoice_testtmail95.csv")
+      .then(async (text)=>{
+        //Text has to given as an argument for this method
+        //neat_CSV -> This is Javascript object
+        //await -> Another way to resolve the Promise
+        const neat_CSV = await neatCSV(text);
+        console.log('neat_CSV');
+        console.log(neat_CSV);
+
+        //We have only 1 row in CSV
+        //neat_CSV[0].Product Name // This doesn't work here (because of space)
+        const actualProductNameInCSV = neat_CSV[0]["Product Name"];
+        const actualAddressInCSV = neat_CSV[0].Address;
+        const actualOrderedByInCSV = neat_CSV[0]["Ordered By"];
+        const actualProductDescriptionInCSV = neat_CSV[0]["Product Description"];
+        const actualProductPriceInCSV = neat_CSV[0]["Product Price"];
+
+        //Assertions for Product details
+        cy.log('Assertions for Product details');
+        expect(actualProductNameInCSV).to.equal('adidas original');
+        expect(actualAddressInCSV).to.equal('India');
+        expect(actualOrderedByInCSV).to.equal('testtmail95@gmail.com');
+        expect(actualProductDescriptionInCSV).to.equal('adidas original');
+        expect(actualProductPriceInCSV).to.equal('31500');
+
+      });
+      
+    })//it
+
+})//describe
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////
+
+ // By using Callback function, we have created a Closure
+        // Closure enable us to keep references around to work done in previous commands
+    it('Closures & Variables',()=>{
+
+        cy.get('#showSmallModal').then($modalButton=>{
+            const smallModalText = $modalButton.text()
+            cy.log('smallModalText: '+smallModalText)
+
+            $modalButton.click()
+
+            // cy.get('#example-modal-sizes-title-sm').contains(smallModalText)
+            // {matchCase: false} -> This will help to avoid the check for exact same String (Case Sensitive is not considered)
+            cy.get('#example-modal-sizes-title-sm').contains(smallModalText,{matchCase: false})
+        })// then
+    })// it
+
+
+
+describe('Youtube - s1n7ax: Conditional Testing',function(){
+
+    it('Conditional Test - Element Present',function(){
+
+        // cy.visit('')
+        cy.get('body').then((body) => {
+            if(body.find("span[title='50 / page']").length > 0){
+                cy.get('locator').should('be.visible')
+            }else{
+                cy.log('Pagination is absent.')
+            }
+        })
+
+    })//it
+
+})//describe
+
+Cypress.Commands.add('getIframe', (iframe)=>{
+    return cy.get(iframe)
+    .its('0.contentDocument.body')
+    .should('be.visible')
+    .then(cy.wrap);
+})
+
+
+// custom command for clicking on link using label
+
+Cypress.Commands.add('clickLink',(label)=>{
+    cy.get('a').contains(label).click();
+
+})
+
+//Over write contains() 
+
+Cypress.Commands.overwrite('contains',(originalFn, subject, filter, text, options = {})=>{
+    // determine if a filter argument was passed
+    if (typeof text === 'object') {
+        options = text
+        text = filter
+        filter = undefined
+    }
+
+    options.matchCase = false
+
+    return originalFn(subject, filter, text, options)
+
+})
+
+//Custom comamnd for login
+
+Cypress.Commands.add("loginapp",(email,password)=>{
+    cy.get('#Email').type(email);
+    cy.get('#Password').type(password);
+    cy.get("button[class='button-1 login-button']").click();
+    
+})
+//////////////////////////////////////////////////////////////////
+cy.on('uncaught:exception', (err, runnable) => {
+    // Return false to prevent Cypress from failing the test
+    return false;
+})
+
+Cypress.Commands.add('logger', (filename, message) => {
+    // Define the log file path based on the filename parameter
+    const logFilePath = `cypress/logs/${filename}.log`;
+  
+    // Create or append to the log file
+    cy.writeFile(logFilePath, `[${new Date().toISOString()}] ${message}\n`, { flag: 'a+' });
+  });
+
+/////////////////////////////////////////////////////////////
+// ***********************************************
+// This example commands.js shows you how to
+// create various custom commands and overwrite
+// existing commands.
+//
+// For more comprehensive examples of custom
+// commands please read more here:
+// https://on.cypress.io/custom-commands
+// ***********************************************
+//
+//
+// -- This is a parent command --
+// Cypress.Commands.add('login', (email, password) => { ... })
+//
+//
+// -- This is a child command --
+// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+//
+//
+// -- This is a dual command --
+// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+//
+//
+// -- This will overwrite an existing command --
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('goToApplication', () => {
+    
+    // Retrieve the application URL from Cypress environment variables
+    const url = Cypress.env('application_URL')
+    
+    // Log the navigation action
+    cy.log('Navigating to application: ' + url)
+
+    // Visit the application URL
+    cy.visit(url)
+})
+Cypress.Commands.add('selectProduct', (productName) => { 
+    cy.get("h4[class='card-title']").each((el, index, $list) => {
+        if(el.text().includes(productName)){
+          //Clicking on the Add button present under productName
+          cy.get('button.btn.btn-info').eq(index).click()
+        }
+    })
+})
+
+//Navigate to application using visit()
+Cypress.Commands.add('goToApplication_AutomationPractice', () => { 
+    //cy.visit('https://rahulshettyacademy.com/angularpractice/')
+    cy.visit(Cypress.env("application_URL_AutomationPractice")) 
+})
+
+
+//Login to application using APIs (Inject JWT token into Browswer's Local storage)
+Cypress.Commands.add('loginToApplication_UsingAPI', () => { 
+   
+    //request() -> Method to make the API calls
+    cy.request(
+        //HTTP method
+        "POST",
+        //Request URL
+        "https://www.rahulshettyacademy.com/api/ecom/auth/login",
+        //Request Body
+        {
+            "userEmail":"testtmail95@gmail.com", 
+            "userPassword":"HiRahul@123"
+        }
+    ).then((response)=>{
+        //Assertion for Response status code
+        expect(response.status).to.eq(200);
+
+        //Assertion for Response body
+        expect(response.body).to.have.property(
+            "message","Login Successfully"
+        );
+
+        //Extract the Token and setting it as an Cypress environment variable
+        //This token will be available in entire project
+        Cypress.env('token_login',response.body.token); 
+        
+        //Use this, if you are getting token in Response Headers
+        //Cypress.env('token_login',response.headers.token); 
+        
+    });
+
+})//loginToApplication_UsingAPI
+
+
+// //Click using click()
+// Cypress.Commands.add('clickOnElement', (element) => { 
+//    //element.click()
+
+//    element.each(($el, index, $list) => {
+//     // $el is a wrapped jQuery element
+//         cy.wrap($el).click()
+//   })
+
+// })
+
+// // Fill TextBox using type()
+// Cypress.Commands.add('fillTextBox', (element, textToBeFilled) => { 
+//    // element.type(textToBeFilled)
+//     element.each((el, index, $list) => {
+//             cy.wrap(el).click()
+//     })
+//  })
+
+ 
+// Wait for 2 seconds using wait()
+Cypress.Commands.add('waitForSomeTime', () => { 
+    cy.wait(2000)
+})
+
+// Wait for Given time using wait()
+Cypress.Commands.add('waitForGivenTime', (timeInSeconds) => { 
+    cy.wait(timeInSeconds*1000)
+})
+Cypress.Commands.add('getIframe', (iframe)=>{
+    return cy.get(iframe)
+    .its('0.contentDocument.body')
+    .should('be.visible')
+    .then(cy.wrap);
+})
+
+
+// custom command for clicking on link using label
+
+Cypress.Commands.add('clickLink',(label)=>{
+    cy.get('a').contains(label).click();
+
+})
+
+//Over write contains() 
+
+Cypress.Commands.overwrite('contains',(originalFn, subject, filter, text, options = {})=>{
+    // determine if a filter argument was passed
+    if (typeof text === 'object') {
+        options = text
+        text = filter
+        filter = undefined
+    }
+
+    options.matchCase = false
+
+    return originalFn(subject, filter, text, options)
+
+})
+
+//Custom comamnd for login
+
+Cypress.Commands.add("loginapp",(email,password)=>{
+    cy.get('#Email').type(email);
+    cy.get('#Password').type(password);
+    cy.get("button[class='button-1 login-button']").click();
+    
+})
+
+//For handling iFrames
+Cypress.Commands.add('getIframe', (iframe) => {
+    return cy.get(iframe)
+        .its('0.contentDocument.body')
+        .should('be.visible')
+        .then(cy.wrap);
+})
+
+//For Cypress drag and drop plugin
+require('@4tw/cypress-drag-drop')
+
+//For Cypress drag and drop custom command
+Cypress.Commands.add('draganddrop', (dragSelector, dropSelector) => {
+    cy.get(dragSelector).should('exist')
+        .get(dropSelector).should('exist');
+
+    const draggable = Cypress.$(dragSelector)[0]; // Pick up this
+    const droppable = Cypress.$(dropSelector)[0]; // Drop over this
+
+    const coords = droppable.getBoundingClientRect()
+    draggable.dispatchEvent(new MouseEvent('mousedown'));
+    draggable.dispatchEvent(new MouseEvent('mousemove', { clientX: 10, clientY: 0 }));
+    draggable.dispatchEvent(new MouseEvent('mousemove', {
+        clientX: coords.left + 10,
+        clientY: coords.top + 10  // A few extra pixels to get the ordering right
+    }));
+    draggable.dispatchEvent(new MouseEvent('mouseup'));
+    return cy.get(dropSelector);
+})
+
+//Login Custom Command
+Cypress.Commands.add('loginOrangeCRM', (username, password) => {
+    cy.get('#txtUsername').type(username)
+    cy.get('#txtPassword').type(password)
+    cy.get('#btnLogin').click()
+    cy.get('#welcome').should('be.visible')
+})

@@ -1,0 +1,179 @@
+Automation Testing | Web+API | Cypress | Javascript | VS Code | API Interceptor | Videos | Screenshots | Retries | Mocha | Mochawesome Reports | Design Pattern (Page Object Model) | BrowserStack | Tagging
+
+
+
+
+assertion chaining
+ cy.get('.alert-error')
+            .should('be.visible')
+            .and('contain.text','Login and/or password are wrong.')
+/////////////////////////////////////////
+ const date = new Date(2020,3,10).getTime() // This will give the timestamp
+        cy.clock(date)
+        cy.log(date)
+/////////////////////////////////////////////////////viewport
+ it('ipad-mini',()=>{
+        cy.viewport('ipad-mini')
+        cy.visit('https://example.com/')
+        cy.wait(2000)
+        cy.url().should('include','example')
+    })// it 
+
+    it('iphone-xr',()=>{
+        cy.viewport('iphone-xr')
+        cy.visit('https://example.com/')
+        cy.wait(2000)
+        cy.url().should('include','example')
+    })// it 
+
+    it('samsung-note9',()=>{
+        cy.viewport('samsung-note9')
+        cy.visit('https://example.com/')
+        cy.wait(2000)
+        cy.url().should('include','example')
+    })// it 
+///////////////////////////////////////////////////custom viewport
+  it('720p',()=>{
+        cy.viewport(1280,720)
+        cy.visit('https://example.com/')
+        cy.wait(2000)
+        cy.url().should('include','example')
+    })// it 
+
+    it('1080p',()=>{
+        cy.viewport(1980,1080)
+        cy.visit('https://example.com/')
+        cy.wait(2000)
+        cy.url().should('include','example')
+    })//
+///////////////////////////////assert url 
+ cy.url().should('include','example.com')
+////////////////////////////////////feature
+ it('Should try to Login using fixtures',()=>{
+
+        cy.visit('http://zero.webappsecurity.com/login.html')
+       
+        cy.fixture('user').then(user => {
+            const username = user.username
+            const password = user.password
+
+        // cy.get('#user_login').clear().type('Some Ivalid Name')
+        cy.get('#user_login').clear().type(username)
+
+        // cy.get('#user_password').clear().type('Some Invalid Password') 
+        cy.get('#user_password').clear().type(password) 
+
+        })// fixture
+///////////////////////////////////////////////////////////
+    // Assertion for Element which has class product_pod (This CSS selector should return 11 elements)
+        // Get element using class
+        cy.get('.product_pod').its('length').should('eq',11)
+//////////////////////////////////////////////////////////////////////
+ cy.reload()
+/////////////////////////////////////////
+ cy.get('.alert-error').should('contain.text','Login and/or password are wrong.')
+
+////////////////////////////////////////////////////
+cy.get('#user_login').clear().type('Some Invalid Name', {delay: 500})
+///////////////////////////////////////////////////
+ cy.get('#user_login').as('textBox_username')
+
+        cy.get('@textBox_username').type('Some Ivalid Name')
+
+        cy.wait(2000)
+///////////////////////////////////////////////////////
+
+
+keyboard simulations
+cy.get("input[title='Search']").type("Test Automation Engineer {enter}")
+////////////////////////////////////////////////////////////////////////////
+it('Should take full page screenshot',()=>{
+        cy.visit('https://github.com/rajatt95')
+        cy.screenshot({capture: 'fullPage'})
+    })// it 
+    
+    it('Should take single element screenshot',()=>{
+        cy.visit('https://github.com/rajatt95')
+        cy.get('.js-profile-editable-area.d-flex.flex-column.d-md-block').screenshot()
+    })// it 
+//////////////////////////////////////////////////////////////////////////
+    cy.visit('https://github.com/rajatt95')
+        
+        cy.wait(2000)
+        
+        cy.get("span[title='MasterSeleniumFramework']").scrollIntoView()
+
+        cy.wait(2000)
+
+        cy.get("img[alt='Avatar']").scrollIntoView()
+////////////////////////////////////////////////////////////////////
+
+ it('Should write Data to JSON file',()=>{
+        
+        cy.writeFile('./files/log.json', {
+            name: "Rajat Verma",
+            githubProfile: "https://github.com/rajatt95"
+        })
+
+    })// it 
+
+    it('Should write Data to TXT file',()=>{
+        
+        cy.writeFile('./files/log.txt', "Rajat Verma Github Profile - https://github.com/rajatt95" )
+
+    })// it 
+    ////////////////////////////////////////////////////////////
+    it('Should read Data from JSON file',()=>{
+        
+        cy.readFile('./files/log.json')
+            .its('githubProfile').should('include','https://github.com/rajatt95')
+
+    })// it 
+
+    it('Should read Data from TXT file',()=>{
+        
+        cy.readFile('./files/log.txt').should('include', "https://github.com/rajatt95")
+
+    })// it 
+    /////////////////////////////////////
+cy.document().its('contentType').should('eq','text/html')
+
+        cy.document().should('have.property','charset')
+            .and('eq','UTF-8')
+///////////////////////////////////////////////////////////////////HHHoookkks
+describe('Section - 03: Cypress Fundamentals - ADVANCED',()=>{
+   
+    before(()=>{
+        //runs before all tests in describe block
+            // Can setup Test Data/Test Context
+            // Seed or Reset Database
+        cy.log('before')
+    })
+
+    beforeEach(()=>{
+        //Runs before each test in describe block
+        cy.log('beforeEach')
+    })
+
+    it('Test #1',()=>{
+        // Test case
+        cy.log('Test #1')
+    })// it 
+    
+    it('Test #2',()=>{
+        // Test case
+        cy.log('Test #2')
+    })// it 
+
+    afterEach(()=>{
+        //Runs after each test in describe block
+        cy.log('afterEach')
+    })
+    
+    after(()=>{
+        //Runs after all tests in describe block
+        cy.log('after')
+    })
+    
+})// describe
+////////////////////////////////////////////////////
